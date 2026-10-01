@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "TabMerger",
+  "name": "Tab Merger",
   "version": "1.0.0",
   "description": "Move the tabs of every window into the current one.",
   "permissions": ["tabGroups"],

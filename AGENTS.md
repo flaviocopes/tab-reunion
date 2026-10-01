@@ -1,4 +1,4 @@
-# TabMerger
+# Tab Merger
 
 A Chrome extension that moves the tabs of every open window into the current one, from the toolbar button or `Alt+Shift+M`. It's plain JavaScript with no build step.
 
@@ -8,7 +8,7 @@ A Chrome extension that moves the tabs of every open window into the current one
 - `background.js`: the service worker. `mergeInto(windowId)` walks every other normal window with the same incognito state, moves runs of ungrouped tabs with `chrome.tabs.move`, moves each group whole with `chrome.tabGroups.move`, then re-pins the tabs that were pinned.
 - `icons/`: `icon.svg` is the source, and the PNGs are rendered from it.
 - `scripts/test.mjs`: loads the extension into Playwright's Chromium and checks a real merge.
-- `scripts/build-release.sh`: zips the extension into `dist/TabMerger-<version>.zip`.
+- `scripts/build-release.sh`: zips the extension into `dist/Tab-Merger-<version>.zip`.
 - `scripts/banner.html` and `scripts/render-banner.mjs`: the README banner, rendered to `docs/banner.png`.
 
 ## Build and run
@@ -18,11 +18,11 @@ npm install                          # Playwright, for the test
 npx playwright install chromium      # the browser the test runs in
 npm test                             # merges three windows in Chromium and checks the result
 node scripts/test.mjs <folder>       # the same test on another copy, like an unzipped release
-scripts/build-release.sh             # dist/TabMerger-<version>.zip and its SHA-256
+scripts/build-release.sh             # dist/Tab-Merger-<version>.zip and its SHA-256
 node scripts/render-banner.mjs       # docs/banner.png at 2x
 ```
 
-To try a change in your own Chrome, open `chrome://extensions`, turn on Developer mode, click **Load unpacked** and pick this folder. After editing, click the reload arrow on the TabMerger card.
+To try a change in your own Chrome, open `chrome://extensions`, turn on Developer mode, click **Load unpacked** and pick this folder. After editing, click the reload arrow on the Tab Merger card.
 
 ## Rules
 

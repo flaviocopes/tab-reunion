@@ -1,12 +1,12 @@
 #!/bin/sh
-# Zips the extension into dist/TabMerger-<version>.zip, a folder ready for Load unpacked.
+# Zips the extension into dist/Tab-Merger-<version>.zip, a folder ready for Load unpacked.
 set -e
 cd "$(dirname "$0")/.."
 export TZ=UTC
 
 version=$(node -p "require('./manifest.json').version")
 icons=$(node -p "[...new Set(Object.values(require('./manifest.json').icons))].join(' ')")
-name="TabMerger-$version"
+name="Tab-Merger-$version"
 stage="dist/$name"
 
 rm -rf dist
