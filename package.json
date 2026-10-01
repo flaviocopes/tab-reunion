@@ -1,5 +1,6 @@
 {
   "name": "tabmerger",
+  "productName": "Tab Merger",
   "private": true,
   "type": "module",
   "scripts": {
