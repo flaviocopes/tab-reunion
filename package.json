@@ -1,0 +1,12 @@
+{
+  "name": "tabmerger",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node scripts/test.mjs",
+    "build": "scripts/build-release.sh"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

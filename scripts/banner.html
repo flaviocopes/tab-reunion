@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { background: transparent; }
+  body { font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+
+  .banner {
+    position: relative; width: 1280px; height: 560px; border-radius: 28px; overflow: hidden;
+    background:
+      radial-gradient(420px 420px at 16% 36%, rgba(110, 150, 255, 0.45), rgba(110, 150, 255, 0)),
+      linear-gradient(180deg, #2F55E0, #16247E);
+  }
+
+  .intro { position: absolute; left: 84px; top: 78px; color: #fff; }
+  .intro img { width: 132px; height: 132px; display: block; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35)); }
+  .intro h1 { margin-top: 26px; font-size: 76px; font-weight: 700; letter-spacing: -1.8px; line-height: 1; }
+  .intro p { margin-top: 14px; font-size: 27px; line-height: 1.3; color: rgba(255, 255, 255, 0.76); }
+  .chips { margin-top: 26px; display: flex; gap: 10px; }
+  .chips span {
+    font-size: 16px; font-weight: 600; color: rgba(255, 255, 255, 0.92); padding: 7px 14px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .stage { position: absolute; left: 600px; top: 0; width: 680px; height: 560px; }
+  .ghost { position: absolute; width: 420px; height: 270px; border-radius: 10px; background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.22); }
+  .ghost::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 34px; border-bottom: 1px solid rgba(255, 255, 255, 0.16); }
+  .ghost.one { left: 300px; top: 34px; transform: rotate(3deg); }
+  .ghost.two { left: -10px; top: 300px; transform: rotate(-3deg); }
+
+  .window {
+    position: absolute; left: 34px; top: 104px; width: 940px; height: 600px; transform: scale(0.66); transform-origin: 0 0;
+    border-radius: 11px; overflow: hidden; background: #DCE3EE; color: #1F1F1F;
+    box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.3), 0 40px 90px rgba(5, 10, 60, 0.5), 0 12px 30px rgba(5, 10, 60, 0.3);
+  }
+  .strip { position: absolute; left: 0; top: 0; right: 0; height: 42px; }
+  .lights { position: absolute; left: 14px; top: 15px; display: flex; gap: 8px; }
+  .lights i { width: 12px; height: 12px; border-radius: 50%; }
+  .tabs { position: absolute; left: 80px; top: 7px; height: 35px; display: flex; }
+  .tab { position: relative; width: 85px; height: 35px; display: flex; align-items: center; gap: 8px; padding: 0 10px 0 12px; font-size: 12.5px; white-space: nowrap; overflow: hidden; }
+  .tab .title { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 18px), transparent); opacity: 0.82; }
+  .tab::after { content: ''; position: absolute; right: 0; top: 9px; width: 1px; height: 17px; background: rgba(0, 0, 0, 0.16); }
+  .tab.pinned { width: 42px; justify-content: center; padding: 0; }
+  .tab.active { width: 200px; background: #fff; border-radius: 9px 9px 0 0; }
+  .tab.active .title { opacity: 1; }
+  .tab.active::after, .tab.before-active::after, .tab.last::after { display: none; }
+  .tab.grouped::before { content: ''; position: absolute; left: 4px; right: 4px; bottom: 0; height: 3px; border-radius: 2px; background: #1E8E3E; }
+  .chip { width: 86px; display: grid; place-items: center; }
+  .chip span { background: #1E8E3E; color: #fff; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 7px; }
+  .fav { flex-shrink: 0; width: 16px; height: 16px; border-radius: 4px; color: #fff; font-size: 10px; font-weight: 700; display: grid; place-items: center; }
+  .plus { font-size: 18px; color: #474747; align-self: center; margin-left: 10px; }
+
+  .toolbar { position: absolute; left: 0; right: 0; top: 42px; height: 44px; background: #fff; border-bottom: 1px solid #E6E9EE; display: flex; align-items: center; gap: 14px; padding: 0 16px; }
+  .toolbar svg { flex-shrink: 0; }
+  .omnibox { flex: 1; height: 30px; border-radius: 15px; background: #EDF1F7; display: flex; align-items: center; gap: 9px; padding: 0 14px; font-size: 13.5px; }
+  .ext { width: 30px; height: 30px; border-radius: 50%; background: rgba(0, 0, 0, 0.08); display: grid; place-items: center; }
+  .ext img { width: 18px; height: 18px; }
+  .avatar { width: 20px; height: 20px; border-radius: 50%; background: #7C8DB5; }
+
+  .page { position: absolute; left: 0; right: 0; top: 86px; bottom: 0; background: #fff; }
+  .site { height: 46px; border-bottom: 1px solid #E6E9EE; display: flex; align-items: center; gap: 10px; padding: 0 64px; font-size: 14px; font-weight: 650; }
+  .site .fav { width: 20px; height: 20px; font-size: 12px; }
+  .page h2 { margin: 30px 64px 0; font-size: 34px; font-weight: 750; letter-spacing: -0.02em; }
+  .bar { height: 9px; border-radius: 5px; background: #E6E9EE; margin: 11px 64px 0; }
+  .accent { width: 180px; height: 8px; background: #E0A100; margin-top: 16px; margin-bottom: 22px; }
+  .code { margin: 24px 64px 0; height: 150px; border-radius: 12px; background: #1F2335; padding: 26px 28px; display: flex; flex-direction: column; gap: 18px; }
+  .code div { display: flex; gap: 12px; }
+  .code i { height: 10px; border-radius: 5px; }
+</style>
+</head>
+<body>
+<div class="banner">
+  <div class="intro">
+    <img src="../icons/icon.svg" alt="">
+    <h1>TabMerger</h1>
+    <p>Merge every Chrome window<br>into one, with one click.</p>
+    <div class="chips"><span>Click or ⌥⇧M</span><span>Keeps tab groups</span><span>One permission</span></div>
+  </div>
+
+  <div class="stage">
+    <div class="ghost one"></div>
+    <div class="ghost two"></div>
+
+    <div class="window">
+      <div class="strip">
+        <div class="lights"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i></div>
+        <div class="tabs">
+          <div class="tab pinned before-active"><span class="fav" style="background:#2F6FED">M</span></div>
+          <div class="tab active"><span class="fav" style="background:#E0A100">F</span><span class="title">The JavaScript Handbook</span></div>
+          <div class="chip"><span>Research</span></div>
+          <div class="tab grouped"><span class="fav" style="background:#7B4FE0">G</span><span class="title">CSS Grid, a complete guide</span></div>
+          <div class="tab grouped"><span class="fav" style="background:#E0457B">L</span><span class="title">Flexbox or Grid?</span></div>
+          <div class="tab"><span class="fav" style="background:#F08A24">N</span><span class="title">Layout notes</span></div>
+          <div class="tab"><span class="fav" style="background:#1A73E8">S</span><span class="title">Flights to Lisbon</span></div>
+          <div class="tab"><span class="fav" style="background:#D93025">H</span><span class="title">Hotels in Lisbon</span></div>
+          <div class="tab last"><span class="fav" style="background:#12A4AF">C</span><span class="title">Calendar, October</span></div>
+          <span class="plus">+</span>
+        </div>
+      </div>
+      <div class="toolbar">
+        <svg width="16" height="16" viewBox="0 0 16 16"><path d="M10 3 5 8l5 5" fill="none" stroke="#474747" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="16" height="16" viewBox="0 0 16 16" opacity="0.4"><path d="m6 3 5 5-5 5" fill="none" stroke="#474747" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="16" height="16" viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v3h-3" fill="none" stroke="#474747" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="omnibox">
+          <svg width="11" height="13" viewBox="0 0 11 13"><rect x="1" y="5.5" width="9" height="6.5" rx="1.5" fill="#5F6368"/><path d="M3 5.5V4a2.5 2.5 0 0 1 5 0v1.5" fill="none" stroke="#5F6368" stroke-width="1.4"/></svg>
+          flaviocopes.com
+        </div>
+        <div class="ext"><img src="../icons/icon.svg" alt=""></div>
+        <div class="avatar"></div>
+        <svg width="4" height="16" viewBox="0 0 4 16"><circle cx="2" cy="3" r="1.6" fill="#474747"/><circle cx="2" cy="8" r="1.6" fill="#474747"/><circle cx="2" cy="13" r="1.6" fill="#474747"/></svg>
+      </div>
+      <div class="page">
+        <div class="site"><span class="fav" style="background:#E0A100">F</span>flaviocopes.com</div>
+        <h2>The JavaScript Handbook</h2>
+        <div class="bar accent"></div>
+        <div class="bar" style="width:740px"></div>
+        <div class="bar" style="width:640px"></div>
+        <div class="bar" style="width:700px"></div>
+        <div class="code">
+          <div><i style="width:70px;background:#C792EA"></i><i style="width:120px;background:#82AAFF"></i><i style="width:150px;background:#C3E88D"></i></div>
+          <div style="padding-left:28px"><i style="width:40px;background:#89DDFF"></i><i style="width:90px;background:#F78C6C"></i><i style="width:210px;background:#C3E88D"></i></div>
+          <div style="padding-left:28px"><i style="width:150px;background:#82AAFF"></i><i style="width:60px;background:#89DDFF"></i></div>
+          <div><i style="width:90px;background:#C792EA"></i><i style="width:130px;background:#FFCB6B"></i><i style="width:80px;background:#C3E88D"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
