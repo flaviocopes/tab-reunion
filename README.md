@@ -4,12 +4,9 @@ Tab Merger is a Chrome extension that moves the tabs of every open window into t
 
 Safari has a Merge All Windows command. Chrome doesn't, so without an extension you drag tabs across one at a time.
 
-<!-- After the launch post is live, add these two lines:
+Read the announcement and watch the 30-second demo on my blog: [I built Tab Merger, a Chrome extension that merges all your windows into one](https://flaviocopes.com/tab-merger/).
 
-Read the announcement and watch the 30-second demo on my blog: [<post title>](https://flaviocopes.com/<slug>/).
-
-[![Watch the 30-second Tab Merger demo](docs/showreel-poster.jpg)](https://flaviocopes.com/<slug>/)
--->
+[![Watch the 30-second Tab Merger demo](docs/showreel-poster.jpg)](https://flaviocopes.com/tab-merger/)
 
 ## Install
 
