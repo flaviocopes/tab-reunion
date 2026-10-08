@@ -1,6 +1,6 @@
 {
-  "name": "tabmerger",
-  "productName": "Tab Merger",
+  "name": "tab-reunion",
+  "productName": "Tab Reunion",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,5 +9,6 @@
   },
   "devDependencies": {
     "playwright": "^1.63.0"
-  }
+  },
+  "version": "1.1.0"
 }

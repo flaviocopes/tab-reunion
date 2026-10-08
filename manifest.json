@@ -1,9 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Tab Merger",
-  "version": "1.0.0",
+  "name": "Tab Reunion",
+  "version": "1.1.0",
   "description": "Move the tabs of every window into the current one.",
-  "permissions": ["tabGroups"],
+  "permissions": [
+    "tabGroups"
+  ],
   "background": {
     "service_worker": "background.js"
   },
